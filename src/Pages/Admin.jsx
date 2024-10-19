@@ -6,6 +6,7 @@ import axios from "axios";
 function AdminPanel() {
   // datos
   const [products, setProducts] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' }); // Estado para ordenar
 
   //paginacion
   const [skip, setSkip] = useState(0);
@@ -44,17 +45,37 @@ function AdminPanel() {
     }
   };
 
+  // Ordenar los productos
+  const sortedProducts = [...products].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? -1 : 1;
+    }
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'ascending' ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
   // Manejar logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
 
-  // detalle dek producto
+  // detalle del producto
   const handleViewProduct = (product) => {
     console.log(product);
     setSelectedProduct(product);
   };
+  
   const handleDeleteProduct = async (id) => {
     const token = localStorage.getItem("token"); // Obtiene el token
   
@@ -85,17 +106,16 @@ function AdminPanel() {
       }
     }
   };
-  
 
   return (
-    <div className="min-h-screen bg-slate-100  p-2 text-black">
+    <div className="min-h-screen bg-slate-100 p-2 text-black">
       <div className="container mx-auto py-10">
         <div className="flex gap-4 justify-between items-center mb-8 max-sm:flex-col max-sm:items-start">
-        <Button
+          <Button
             marginRight={16}
             appearance="primary"
             intent="primary"
-            onClick={()=>navigate("/tienda")}
+            onClick={() => navigate("/tienda")}
           >
             Ver Tienda
           </Button>
@@ -110,12 +130,10 @@ function AdminPanel() {
           </Button>
         </div>
 
-        <div className="flex ">
+        <div className="flex">
           {/* Panel de Productos */}
           <div className="w-full bg-white text-black rounded-md p-6 shadow-lg">
-          
             <div className="flex justify-between items-center mb-6">
-             
               <h2 className="text-2xl font-bold ">Productos</h2>
               <Button
                 appearance="primary"
@@ -129,21 +147,20 @@ function AdminPanel() {
             <div className="overflow-y-auto ">
               <table className="w-full text-left max-lg:text-sm">
                 <thead>
-                  <tr>
-                    <th className="border-b-2 py-2 px-4">Nombre</th>
-                    <th className="border-b-2 py-2 px-4">Precio</th>
-                    <th className="border-b-2 py-2 px-4">Stock</th>
-                    <th className="border-b-2 py-2 px-4">Categoria</th>
-                    <th className="border-b-2 py-2 px-4">Tallas</th>
-                    <th className="border-b-2 py-2 px-4">Colores</th>
-                    <th className="border-b-2 py-2 px-4">Descripcion</th>
-                    <th className="border-b-2 py-2 px-4">Imagen</th>
-
-                    <th className="border-b-2 py-2 px-4">Acciones</th>
+                  <tr className="text-center">
+                    <th className="border-b-2 py-2 px-4 " onClick={() => requestSort('name')}><IconOrder /> Nombre</th>
+                    <th className="border-b-2 py-2 px-4 " onClick={() => requestSort('price')}><IconOrder /> Precio</th>
+                    <th className="border-b-2 py-2 px-4 " onClick={() => requestSort('stock')}><IconOrder /> Stock</th>
+                    <th className="border-b-2 py-2 px-4  " onClick={() => requestSort('category')}><IconOrder /> Categoría</th>
+                    <th className="border-b-2 py-2 px-4 " onClick={() => requestSort('sizes')}><IconOrder /> Tallas</th>
+                    <th className="border-b-2 py-2 px-4" onClick={() => requestSort('colors')}><IconOrder /> Colores</th>
+                    <th className="border-b-2 py-2 px-4 " onClick={() => requestSort('description')}><IconOrder /> Descripción</th>
+                    <th className="border-b-2 py-2 px-4 ">Imagen</th>
+                    <th className="border-b-2 py-2 px-4 ">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
+                  {sortedProducts.map((product) => (
                     <tr key={product.id}>
                       <td className="border-b py-2 px-4">{product.name}</td>
                       <td className="border-b py-2 px-4">S/{product.price}</td>
@@ -277,3 +294,14 @@ function AdminPanel() {
 }
 
 export default AdminPanel;
+
+
+const IconOrder =()=>{
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="inline-block icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 9l4 -4l4 4m-4 -4v14" />
+  <path d="M21 15l-4 4l-4 -4m4 4v-14" />
+</svg>
+  )
+}

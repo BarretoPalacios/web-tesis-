@@ -21,16 +21,13 @@ function ListCards({ product, w = "300px", h = "400px" }) {
             src={`http://127.0.0.1:8000${product.image_url.replace(".", "")}`}
             alt={product.description}
             className={`w-full h-full object-cover object-top`}
-            // style={{
-            //   width: w,
-            // }}
           />
         </div>
         {/* informacion */}
         <div className="flex flex-col">
          {/* informacion texto */}
          <div className="capitalize p-1">
-         <h3 className="font-bold">{product.name}</h3>
+         <h3 className={`font-bold w-[calc(${w}-15px)]`} >{product.name}</h3>
             <h4 className=" text-sm italic text-wrap w-[25ch] line-clamp-1">
               {product.description}
             </h4>

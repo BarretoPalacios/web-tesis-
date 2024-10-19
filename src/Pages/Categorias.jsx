@@ -12,12 +12,12 @@ function Categorias() {
         <h2 className="text-3xl text-start capitalize p-5 font-bold">
           categoria 1
         </h2>
-        <SugerenciasCategoria categoria={"polos"} w="300px" h="400px" />
+        <SugerenciasCategoria categoria={"cafarenas"} w="300px" h="400px" />
         <h2 className="text-3xl text-start capitalize p-5 font-bold">dsadsa</h2>
-        <SugerenciasCategoria categoria={"abriogo"} w="300px" h="400px" />
+        <SugerenciasCategoria categoria={"camiseta"} w="300px" h="400px" />
         <h2 className="text-3xl text-start capitalize p-5 font-bold">dsadsa</h2>
         <SugerenciasCategoria
-          categoria={"string"}
+          categoria={"gorras"}
           w="300px"
           h="400px"
           limit={6}

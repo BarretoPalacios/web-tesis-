@@ -120,96 +120,101 @@ const FormularioCreate = () => {
   };
 
   return (
-    <div className="p-4 max-w-96 m-auto">
+    <div className="p-4 max-w-[700px] m-auto">
       <h2 className="text-3xl black mb-4">
         {isEdit ? "Editar Producto" : "Nuevo Producto"}
       </h2>
-      <form onSubmit={handleSaveProduct}>
-        <div className="mb-4">
-          <label className="block mb-2 text-sm font-medium text-gray-900">
-            Imagen
-          </label>
-          <input
-            accept="image/*"
-            className="p-1 block w-full text-sm text-gray-600 border cursor-pointer"
-            type="file"
-            onChange={handleImageChange}
-            required={!isEdit} // Solo obligatorio en creación
+      <form
+        onSubmit={handleSaveProduct}
+        className="w-full flex flex-col gap-4 border p-4"
+      >
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-900">
+              Imagen
+            </label>
+            <input
+              accept="image/*"
+              className="p-1 block w-full text-sm text-gray-600 border cursor-pointer"
+              type="file"
+              onChange={handleImageChange}
+              required={!isEdit} // Solo obligatorio en creación
+            />
+          </div>
+
+          <TextInputField
+            label="Nombre"
+            placeholder="Nombre del Producto"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            required
+          />
+
+          <TextInputField
+            label="Precio"
+            placeholder="Precio del Producto"
+            type="number"
+            step="0.01"
+            onChange={(e) => setPrice(e.target.value)}
+            value={price}
+            required
+          />
+
+          <TextInputField
+            label="Stock"
+            placeholder="Stock del Producto"
+            type="number"
+            onChange={(e) => setStock(e.target.value)}
+            value={stock}
+            required
+          />
+
+          <TextareaField
+            label="Descripcion"
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            required
+          />
+
+          <SelectField
+            label="Categoria"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value="gorras">gorras</option>
+            <option value="chompa">chompa</option>
+            <option value="abrigo">abrigo</option>
+            <option value="polos">polos</option>
+            <option value="cafarenas">cafarenas</option>
+            <option value="pantalones">pantalones</option>
+            <option value="falda">falda</option>
+            <option value="vestido">vestido</option>
+            <option value="chaqueta">chaqueta</option>
+            <option value="camiseta">camiseta</option>
+            <option value="shorts">shorts</option>
+            <option value="bufanda">bufanda</option>
+            <option value="guantes">guantes</option>
+            <option value="calcetines">calcetines</option>
+            <option value="traje">traje</option>
+          </SelectField>
+
+          <TagInput
+            inputProps={{ placeholder: "Elije o escribe las tallas" }}
+            values={sizes}
+            onChange={setSizes}
+            autocompleteItems={autocompleteSizes}
+            required
+          />
+
+          <TagInput
+            inputProps={{ placeholder: "Elije o escribe los colores" }}
+            values={colors}
+            onChange={setColors}
+            autocompleteItems={autocompleteColors}
+            required
           />
         </div>
-
-        <TextInputField
-          label="Nombre"
-          placeholder="Nombre del Producto"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          required
-        />
-
-        <TextInputField
-          label="Precio"
-          placeholder="Precio del Producto"
-          type="number"
-          step="0.01"
-          onChange={(e) => setPrice(e.target.value)}
-          value={price}
-          required
-        />
-
-        <TextInputField
-          label="Stock"
-          placeholder="Stock del Producto"
-          type="number"
-          onChange={(e) => setStock(e.target.value)}
-          value={stock}
-          required
-        />
-
-        <TextareaField
-          label="Descripcion"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-          required
-        />
-
-        <SelectField
-          label="Categoria"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-        >
-          <option value="gorras">gorras</option>
-          <option value="chompa">chompa</option>
-          <option value="abrigo">abrigo</option>
-          <option value="polos">polos</option>
-          <option value="cafarenas">cafarenas</option>
-          <option value="pantalones">pantalones</option>
-          <option value="falda">falda</option>
-          <option value="vestido">vestido</option>
-          <option value="chaqueta">chaqueta</option>
-          <option value="camiseta">camiseta</option>
-          <option value="shorts">shorts</option>
-          <option value="bufanda">bufanda</option>
-          <option value="guantes">guantes</option>
-          <option value="calcetines">calcetines</option>
-          <option value="traje">traje</option>
-        </SelectField>
-
-        <TagInput
-          inputProps={{ placeholder: "Elije o escribe las tallas" }}
-          values={sizes}
-          onChange={setSizes}
-          autocompleteItems={autocompleteSizes}
-          required
-        />
-
-        <TagInput
-          inputProps={{ placeholder: "Elije o escribe los colores" }}
-          values={colors}
-          onChange={setColors}
-          autocompleteItems={autocompleteColors}
-          required
-        />
 
         <div className="flex justify-center w-full mt-4 mb-4">
           <Button marginRight={16} appearance="primary" type="submit">
