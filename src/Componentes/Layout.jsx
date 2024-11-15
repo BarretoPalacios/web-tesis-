@@ -1,5 +1,6 @@
+import Footer from "../secciones/Footer";
 import Navbar from "./Navbar/Navbar";
-import Footer from "./secciones/Footer";
+
 
 function Layout({ children }) {
   return (

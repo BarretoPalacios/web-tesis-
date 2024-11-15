@@ -1,5 +1,3 @@
-import React from "react";
-
 function PortadaImage({ isImage, urlBg, title, altura = "h-52" }) {
   return isImage ? (
     <div
